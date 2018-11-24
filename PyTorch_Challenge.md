@@ -44,7 +44,14 @@ Deep learning:
 
 And we'll be ending with building this from scratch!!!  
 
-![challenge project](pytorch-project-image.png)
+![challenge project](pytorch-project-image.png){.center}
+<style>
+  .markdown-body .center {
+    display: block;
+    border: 1px solid silver;
+    text-align: center;
+  }
+</style>
 
 ## Introduction to Neural Networks
 Learn the concepts behind how neural networks operate and how we train them using data.  
@@ -69,33 +76,62 @@ We know that:
 - student A: 9/10 on a test, 8/10 grades - passes the class  
 - student B: 3/10 on test, 4/10 grades - fails the class  
 Does student C pass or fail? S/he has 7/10 on test, 6/10 grades? One way to find out is to plot the students' marks:
-![plot marks on a graph](images/classification-ex.png)
-![plot all known marks](images/classification-ex2.png)
-![divide categories (classify them)](images/classification-ex2-answer.png)
+![plot marks on a graph](images/classification-ex.png){.half1}
+~~(above) Plot of the first 2 students~~
+
+![plot all known marks](images/classification-ex2.png){.half}
+~~Plot the whole class~~
+
+![divide categories (classify them)](images/classification-ex2-answer.png){.half}
+~~The best linear boundary to divide the Passes from the Fails~~
+<style>
+  .markdown-body{width: 90%;}
+  .half1{width:62%;}
+  .half{width:60%;}
+  img + del { 
+    text-decoration: none;
+    font-style: italic;
+    display: block;
+    text-indent: 7%;
+  }
+</style>
 
 Great! Well, this boundary is easy for us to visualize, but not easy for a computer.
 
 ### Linear Boundaries
-This boundary is linear; ie. a single, straight line. Calculated by ![w_{1}x_{1} + w_{2}x_{2} + b = 0](https://latex.codecogs.com/gif.latex?w_%7B1%7Dx_%7B1%7D%20&plus;%20w_%7B2%7Dx_%7B2%7D%20&plus;%20b%20%3D%200).
+This boundary is linear; ie. a single, straight line. Calculated by ![w_{1}x_{1} + w_{2}x_{2} + b = 0](https://latex.codecogs.com/gif.latex?w_%7B1%7Dx_%7B1%7D%20&plus;%20w_%7B2%7Dx_%7B2%7D%20&plus;%20b%20%3D%200){.snippet}.
+<style>
+  .snippet {
+    /*background-color: #eee;*/
+    padding: 0;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(0,0,0,0.04);
+    border-radius: 3px;
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  }
+</style>
 
 For a computer, we need an equation to create this boundary.
 ![linear boundary equation for this example](images/equation.png)
 
-A general linear boundary equation is ![w_{1}x_{1} + w_{2}x_{2} + b = 0](https://latex.codecogs.com/gif.latex?w_%7B1%7Dx_%7B1%7D%20&plus;%20w_%7B2%7Dx_%7B2%7D%20&plus;%20b%20%3D%200), abbreviated in vector notation as ![abbrev equation](https://latex.codecogs.com/gif.latex?Wx%20&plus;%20b%20%3D%200), where *W* is the vector ![vector W](https://latex.codecogs.com/gif.latex?W%20%3D%20%28w_%7B1%7D%2C%20w_%7B2%7D...%29), *x* is the vector ![vector x](https://latex.codecogs.com/gif.latex?x%20%3D%20%28x_%7B1%7D%2C%20x_%7B2%7D...%29), and the equation is *W* times *x* plus *b*. We'll refer to *x* as the **inputs**, *W* as the **weights**, and *b* as the **bias**.
+A general linear boundary equation is ![w_{1}x_{1} + w_{2}x_{2} + b = 0](https://latex.codecogs.com/gif.latex?w_%7B1%7Dx_%7B1%7D%20&plus;%20w_%7B2%7Dx_%7B2%7D%20&plus;%20b%20%3D%200){.snippet}, abbreviated in vector notation as ![abbrev equation](https://latex.codecogs.com/gif.latex?Wx%20&plus;%20b%20%3D%200){.snippet}, where `W`{.snippet} is the vector ![vector W](https://latex.codecogs.com/gif.latex?W%20%3D%20%28w_%7B1%7D%2C%20w_%7B2%7D...%29){.snippet}, *x* is the vector ![vector x](https://latex.codecogs.com/gif.latex?x%20%3D%20%28x_%7B1%7D%2C%20x_%7B2%7D...%29){.snippet}, and the equation is *W* times *x* plus *b*. We'll refer to *x* as the **inputs**, *W* as the **weights**, and *b* as the **bias**.
 
-*y* is the label that we're trying to predict. It'll be either 1 or 0 (ie, true or false, in this case); 1 if *y* is above the line (ie ![greater than or equal to 0](https://latex.codecogs.com/gif.latex?%5Cgeq%200)), or 0 if *y* is below the line (ie < 0).
+*y* is the label that we're trying to predict. It'll be either 1 or 0 (ie, true or false, in this case); 1 if *y* is above the line (ie ![greater than or equal to 0](https://latex.codecogs.com/gif.latex?%5Cgeq%200){.snippet}), or 0 if *y* is below the line (ie < 0).
 
 Our prediction will be *"y hat equals 1 if above the line, or y hat equals 0 if below the line"*:  
-![y hat = 1 or 0](https://latex.codecogs.com/png.latex?%5Cinline%20%5Chat%7By%7D%20%3D%20%5Cbegin%7BBmatrix%7D%20%5Cbegin%7Balign*%7D%20%26%201%20if%20Wx&plus;b%5Cgeq0%20%5C%5C%20%26%200%20if%20Wx&plus;b%3C0%20%5Cend%7Balign*%7D%5Cend%7BBmatrix%7D).
+![y hat = 1 or 0](https://latex.codecogs.com/png.latex?%5Cinline%20%5Chat%7By%7D%20%3D%20%5Cbegin%7BBmatrix%7D%20%5Cbegin%7Balign*%7D%20%26%201%20if%20Wx&plus;b%5Cgeq0%20%5C%5C%20%26%200%20if%20Wx&plus;b%3C0%20%5Cend%7Balign*%7D%5Cend%7BBmatrix%7D){.snippet}.
 
-***NOTE:*** y is the ACTUAL solution vector, while ![\hat{y}](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Chat%7By%7D) is the PREDICTED solution.
+***NOTE:*** y is the ACTUAL solution vector, while ![\hat{y}](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Chat%7By%7D){.snippet} is the PREDICTED solution.
 
 ![y hat = 1 or 0](images/y-hat.png)
 
 ### Higher Dimensions
 Higher dimensional boundaries are needed when there are more data points to look at.  
-For instance, a plane boundary (a flat surface) occurs when there is ![w1x1 + w2x2 + w3x3 + b = 0](https://latex.codecogs.com/gif.latex?%5Cinline%20w_%7B1%7Dx_%7B1%7D%20&plus;%20w_%7B2%7Dx_%7B2%7D%20&plus;%20w_%7B3%7Dx_%7B3%7D%20&plus;%20b%20%3D%200).  
-There are also even higher dimensions with ![w1x1 + w2x2 + ... + wnxn + b = 0](https://latex.codecogs.com/gif.latex?%5Cinline%20w_%7B1%7Dx_%7B1%7D%20&plus;%20w_%7B2%7Dx_%7B2%7D%20&plus;%20...%20&plus;%20w_%7Bn%7Dx_%7Bn%7D%20&plus;%20b%20%3D%200).
+For instance, a plane boundary (a flat surface) occurs when there is ![w1x1 + w2x2 + w3x3 + b = 0](https://latex.codecogs.com/gif.latex?%5Cinline%20w_%7B1%7Dx_%7B1%7D%20&plus;%20w_%7B2%7Dx_%7B2%7D%20&plus;%20w_%7B3%7Dx_%7B3%7D%20&plus;%20b%20%3D%200){.snippet}.  
+There are also even higher dimensions with ![w1x1 + w2x2 + ... + wnxn + b = 0](https://latex.codecogs.com/gif.latex?%5Cinline%20w_%7B1%7Dx_%7B1%7D%20&plus;%20w_%7B2%7Dx_%7B2%7D%20&plus;%20...%20&plus;%20w_%7Bn%7Dx_%7Bn%7D%20&plus;%20b%20%3D%200){.snippet}.
 
 ### Perceptrons
 - the building block of neural networks
@@ -106,12 +142,12 @@ There are also even higher dimensions with ![w1x1 + w2x2 + ... + wnxn + b = 0](h
    - the calculation is also in a node  
    - the prediction (score or y-hat) is the return value
 
-![perceptron using our example](images/perceptron-example.png)
-![perceptron with summing equation](images/perceptron-summation.png)
+![perceptron using our example](images/perceptron-example.png){.half}
+![perceptron with summing equation](images/perceptron-summation.png){.half}
 
 In our example, we're using an implicit function called a **step function**. This is sometimes viewed in its own node, in which case the *linear function* is in a node where the calculation occurs ("the first node calculates the linear equation on the inputs of the weights"), and the *step function* is in a node where the step function is applied to the result of the calculation.
 
-![perceptron showing both the linear function and the step function](images/perceptron-linear-stepfunction.png)
+![perceptron showing both the linear function and the step function](images/perceptron-linear-stepfunction.png){.half}
 
 In the future, we'll be using different step functions, so it is useful to specify it in the node.
 
@@ -122,35 +158,41 @@ In the same way the *input* nodes are one-way to the calculation node, resulting
 
 So far, we're working with a single "neuron". Later it'll get more complicated with whole networks of these calculations!
 
-![perceptron vs neuron](images/neurons.png)
+![perceptron vs neuron](images/neurons.png){.half}
 
 ### Perceptrons as Logical Operators ###
-Perceptrons can be used as logical operators as well.
-![an AND perceptron](images/perceptron-and.png)
+Perceptrons can be used as logical operators as well.  
+![an AND perceptron](images/perceptron-and.png){.quarter}
+<style type="text/css">
+  .quarter { width: 30%; }
+</style>
 
 #### AND Perceptron
 QUIZ: What are the weights and bias for the AND perceptron?  
-More than 1 set of values will work!
-![an AND perceptron visualized](images/and-perceptron.png)
+More than 1 set of values will work!  
+![an AND perceptron visualized](images/and-perceptron.png){.half}
 
 #### OR Perceptron
 QUIZ: What are the weights and bias for the OR perceptron?  
-Basically, the weights work together to create the angle of the linear boundary (think of it like a teeter-totter where different weights on the x's change the angle) and the bias (actually it's the *difference* between the bias and the weighted inputs) sort of moves that boundary left or right. SO to move the boundary over (while maintaining the same angle), you can either change the weights (by the same amount) OR change the bias.
-![an OR perceptron visualized](images/perceptron-or.png)
+Basically, the weights work together to create the angle of the linear boundary (think of it like a teeter-totter where different weights on the x's change the angle) and the bias (actually it's the *difference* between the bias and the weighted inputs) sort of moves that boundary left or right. SO to move the boundary over (while maintaining the same angle), you can either change the weights (by the same amount) OR change the bias.  
+![an OR perceptron visualized](images/perceptron-or.png){.half}
 
 #### NOT Perceptron ####
 The **NOT** only cares about a single input (like, for input (0, 1) it cares only about either the 0 or the 1); all other inputs are ignored. This single input is then turned into the opposite.
 
 #### XOR Perceptron ####
-The **XOR** perceptron returns a positive value ONLY when the inputs are different (I think?). 
-![an XOR perceptron visualized](images/perceptron-xor.png)
+The **XOR** perceptron returns a positive value ONLY when the inputs are different (I think?).  
+![an XOR perceptron visualized](images/perceptron-xor.png){.half}
 
 As you can see, it's not the regular **OR** since the first input (1,1) returns a false value! To get around this, we have to create a *multi-layer perceptron* or a (very basic) neural network. 
 
 **NAND** is short for **NOT AND**.  
 
-![an XOR neural network](images/xor-neuralnetwork.png)  
-![an XOR multi-layer perceptron](images/xor-multi-layer-perceptron.png)
+![an XOR neural network](images/xor-neuralnetwork.png){.smaller_half} 
+![an XOR multi-layer perceptron](images/xor-multi-layer-perceptron.png){.smaller_half}
+<style type="text/css">
+  .smaller_half {width: 45%;}
+</style>
 
 ### Perceptron Trick ###
 Since we can't calculate the linear boundary by hand every time, we can get a computer to find the equation. How do we do that? Using the Perceptron Trick!  
@@ -159,42 +201,232 @@ The computer begins with a random equation (random line). The correctly classifi
 
 ![perceptron trick cartoon](images/perceptron-trick.png)
 
-Example: A random equation of ![3x1 + 4x2 - 10 = 0](https://latex.codecogs.com/gif.latex?%5Cinline%203x_%7B1%7D%20&plus;%204x_%7B2%7D%20-%2010%20%3D%200). If we have a point (1,1) inside the current negative area that should be in the positive area, the computer should add the data point to the equation (with 1 as the bias). However, since this drastically changes the equation and might be overkill, we use a ***learning rate***. In this case it'll be 0.1, so we only add a 10th of the incorrectly classified data point. So the new equation becomes ![3.1x_1 + 4.1x_2 - 9.9 = 0](https://latex.codecogs.com/gif.latex?%5Cinline%203.1x_%7B1%7D%20&plus;%204.1x_%7B2%7D%20-%209.9%20%3D%200).
+Example: A random equation of ![3x1 + 4x2 - 10 = 0](https://latex.codecogs.com/gif.latex?%5Cinline%203x_%7B1%7D%20&plus;%204x_%7B2%7D%20-%2010%20%3D%200){.snippet}. If we have a point (1,1) inside the current negative area that should be in the positive area, the computer should add the data point to the equation (with 1 as the bias). However, since this drastically changes the equation and might be overkill, we use a ***learning rate***. In this case it'll be 0.1, so we only add a 10th of the incorrectly classified data point. So the new equation becomes ![3.1x_1 + 4.1x_2 - 9.9 = 0](https://latex.codecogs.com/gif.latex?%5Cinline%203.1x_%7B1%7D%20&plus;%204.1x_%7B2%7D%20-%209.9%20%3D%200){.snippet}.
 
 The computer continues doing this until it correctly classifies all (or, more probably, most) of the data points.  In this example, it would do this 10 times to get the point (1,1) into the positive area.
 
-NOTE: If a data point is incorrectly classified in the positive area, a 10th of that data point should be *subtracted* from the equation.
+**NOTE:** If a data point is incorrectly classified in the positive area (meaning the line is "more positive" than it should be, since the points don't move but the line does), a 10th of that data point should be *subtracted* from the equation in order to make the line move towards the negative.
 
 ### Perceptron Algorithm ###
-The algorithm is just the equation in "math" terms. The ![alpha](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Calpha) is the *learning rate*, and coordinates are (p, q).
+The algorithm is just the equation in "math" terms. The ![alpha](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Calpha){.snippet} is the *learning rate*, and coordinates are `(p, q)`.
 
-### Non-Linear Regions
+Holy cow, it took me a long time to get this! Mostly because I didn't understand that the coordinate (p, q) is an element in x - as in ![x1](https://latex.codecogs.com/gif.latex?%5Cinline%20x_%7B1%7D){.snippet}, ![x2](https://latex.codecogs.com/gif.latex?%5Cinline%20x_%7B2%7D){.snippet}, and ![x3](https://latex.codecogs.com/gif.latex?%5Cinline%20x_%7B3%7D){.snippet} are each a coordinate `(p, q)`! I won't write it here since it was only a small portion of the whole code. I'm sure I'll be able to get it by the end of this Challenge!
 
-### Error Functions
+### Non-Linear Regions ###
+There are also data sets that are more complex and cannot be divided linearly.  
+So next, we're looking at a curve!
 
-### Log-loss Error Function
+### Error Functions ###
+We'll be using **error functions** to tell us how far we are from the solution - just the distance from the goal.
 
-### Discrete vs Continuous
+### Log-loss Error Function ###
+I didn't fully understand this. **Log-loss** wasn't mentioned and the quiz was for *gradient descent* which he said we'd look at later...?
 
-### Softmax
+Someone in the forums (Rusty) said:
 
-### One-Hot Encoding
+```
+log loss = 2 possible outputs
+cross entropy = 3 or more possible outputs
 
-### Maximum Likelihood
+log loss = binary cross entropy
+```
 
-### Maximizing Probabilities
+Basically, rather than discrete distances (like 2, 3, 4), it's better to have continuous distances (like 9.00, 8.57, 3.90) so we can orient ourselves better.
 
-### Cross-Entropy 1
+Also, penalties (distance points) are included but minimal for *correctly* classified data points, as well as being larger for incorrectly classified data.
 
-### Cross-Entropy 2
+### Discrete vs Continuous ###
+Currently, our algorithm (linear boundary) is discrete (the answer is either Yes (1) or No (0)). We need to convert it to a continuous outcome. So we'll change from a **step function** to a **sigmoid function**.
 
-### Multi-Class Cross Entropy
+>![activation functions](images/activation_functions.png){.half}
 
-### Logistic Regression
+A *sigmoid function* gives us a probability of passing. The high end approaches 1, while the negative approaches 0. The middle is 50%, which is when the linear boundary `Wx + b` equalled 0.
 
-### Gradient Descent
+![activation function predictions](images/activation_function_predictions.png){.half1}  
+![sigmoid function formula](images/sigmoid_function.png){.quarter}
+
+```
+@Zenquiorra (on slack)
+W and X are an array of values, their multiplication(linear combination) will give a scalar value (say 'x'). This x, when substituted in 1/(1+e^(-x)), will find the value of the sigmoid function of Wx+b
+```
+
+### Softmax ###
+So far, we've only been talking binary predictions. What about if we want more classifications? `[cat, dog, bird]` for example?
+
+The answer is the **Softmax function**.   
+Example: The outcomes are either:  
+a duck - at a score of 2  
+a beaver - at a score of 1  
+a walrus - at a score of 0
+
+We tried: `2/(2+1+0)` for the duck, `1/(2+1+0)` for the beaver, etc. However, if we have negative outcomes, it's pretty easy to end up trying to divide by zero!
+
+A function that turns every (including negative) number into a positive is the exponential. We'll use ![e to the x](https://latex.codecogs.com/gif.latex?%5Cinline%20e%5Ex){.snippet}. The "same" formula then becomes ![e^2/e^2 + e^1 + e^0)](https://latex.codecogs.com/gif.latex?%5Cinline%20e%5E2/%28e%5E2%20&plus;%20e%5E1%20&plus;%20e%5E0%29){.snippet} for the duck, ![e^1/e^2 + e^1 + e^0)](https://latex.codecogs.com/gif.latex?%5Cinline%20e%5E1/%28e%5E2%20&plus;%20e%5E1%20&plus;%20e%5E0%29){.snippet} for the beaver, and ![e^0/e^2 + e^1 + e^0)](https://latex.codecogs.com/gif.latex?%5Cinline%20e%5E0/%28e%5E2%20&plus;%20e%5E1%20&plus;%20e%5E0%29){.snippet} for the walrus. These functions give us a beautiful probability for our 3 outcomes: `0.67 duck`, `0.24 beaver`, `0.09 walrus`.
+
+The **Softmax Function** is defined as:
+
+For linear function scores: ![Z1, Z2, ... Zn](https://latex.codecogs.com/gif.latex?%5Cinline%20Z_%7B1%7D...Z_%7Bn%7D){.snippet} (each is a score for each of the classes), the probability (P) that the object in some class i is (as follows):
+
+>![probability of class i](images/softmax_function.png){.quarter}
+
+### One-Hot Encoding ###
+If you only have 2 input variables, it's easy to numerize them: it's `1` or `0`.  
+But if you have multiple inputs, you can't put `0, 1, 2`, because that assumes a dependence between classes (ie a hierarchy or something). What's the solution?
+
+The solution is kind of like binary; it's an identity matrix, which is the matrix equivalent of 1. (Like, you can multiply ANY matrix by an identity matrix and you'll get the original matrix back.)  
+> ![it's an identity matrix](images/identity_matrix.png){.half}
+
+![one-hot encoding](images/one-hot_encoding.png){.smaller_half}
+
+### Maximum Likelihood ###
+Given any 2 linear boundaries in an example model (say, our students' model), which line is a better line? Here is where we'll need an equation to calculate each line's probability.
+
+**Method:** multiply all the y_hat values together to get the total probability (of all combined data points).  
+![total probability examples](images/maximum_likelihood.png){.half}
+
+### Maximizing Probabilities ###
+Remember that we're talking about **Error Function**, and that we want to *minimize* the error function. And also we want to *maximize* the probability. So maybe these 2 work together, or are even the same thing.
+
+However! Products are tough - and for potentially thousands of numbers between 0 and 1, there will be TONS of decimal points!  
+Instead, we want to take sums and *turn them into products*!!  
+
+It turn out that:
+>![log of (ab) = log of a + log of b](images/log_for_sums.png){.half}
+
+#### Logarithm Reminder ####
+>![log explanation](images/log_defined.png){.half}
+
+
+![a log from a tree](images/log.jpg){.one_third} == ![an image of Rosie as a witch](images/witch_power.jpg){.one_third}  
+<style type="text/css">
+  .one_third{
+    width: 15%;
+  }
+</style>
+Maybe easier to remember: "log" == "to which power?"  
+
+### Cross-Entropy 1 ###
+"From now until the end of class, we'll be taking the natural logarithm,  which is base e instead of 10. Nothing different happens to base 10; everything works the same cuz everything gets scale by the same factor so it's just more for convention."  
+
+Where **ln** is logarithm:
+>![the product in our examples vs the natural logarithm](images/base_e.png){.eighty}
+<style type="text/css">
+  .eighty { width: 80%; }
+</style>
+
+Notice all of them are negative numbers. The log of anything between 0 and 1 is a negative number - the log of 1 = 0 (and log of 0 is undefined since no number squared can equal 0). 
+
+We know that a high probability of success approaches 1 (which is 100%). When we take the *negative logarithm* of that probability, we get a low number (it's how logs work). We can therefore think of this resulting *negative log* as errors at each point since low will be good scores.
+
+*To get positive numbers, we'll take the **negative** of the log of the probabilities.* This is called **Cross-Entropy**.
+
+So now our goal has changed from maximizing the probability to minimizing the cross entropy (errors). 
+
+
+### Cross-Entropy 2 ###
+If we put our weights as `1` for the higher (of 2) probability of pass/fail output per input, and `0` for the less likely probability. For example, if the probability of finding a gift is 0.8 (yes or `1`) and 0.2 for not finding one (no or `0`). **Note that the probabilities for each data point need to add up to 1 (0.8 + 0.2 == 1.0)**
+
+For each data point (input), we add the product of the weight and `-log`, and the take the sum of each of those sums.
+
+`input 1` = `(yes)(-log(input 1a)` + `(no)(-log(input 1b)`  
+`input 2` = `(yes)(-log(input 2a)` + `(no)(-log(input 2b)`  
+and then `input 1 + input 2` equals the **cross entropy**.
+
+**Note** that `no` can be written as `0`, so `1-0` is also valid.  
+**Note** that `input b` is `1 - input a` since inputs a and b add up to 1!
+
+>![cross entropy example and formula](images/cross-entropy.png){.half1}
+
+### Multi-Class Cross Entropy ###
+This formula works for multiple unrelated classes.
+![multiple classed cross entropy example](images/multiclass-crossentropy.png){.half1}
+
+Where:
+`p` is the probability  
+`j` is the door  
+`n` is the number of doors, starting at `i`  
+`m` is the number of animals (or *classes*), starting at `j`
+
+![multi-class cross entropy formula and example](images/multiclass-crossentropy2.png){.half1}
+
+### Logistic Regression ###
+**Logistic Regression**: "the building block of all that constitutes Deep Learning!"  
+
+Basically:
+- take your data
+- pick a random model
+- calculate the error
+- minimize the error and obtain a better model
+- enjoy!
+
+To recap the cross entropy function:  
+![error function explanation](images/error-function-pre-formula.png)
+
+The difference between the *cross-entropy* and the *error* functions is just that we **take the average of the cross-entropy function** to get the error function.
+
+And in terms of weights `W` and bias `b`:  
+![error function in terms of W and b](images/error-function.png)
+
+Difference between binary and multiclass formulas: (images give class types)
+![2-class and multi-class formulas](images/2-to-many-class-entropy-formulas.png)
+
+### Gradient Descent ###
+If you need a math review for this, you can find it [at this spot](math_review_for_understanding_gradient_descent.md) or [here on my computer...](file:///C:/users/shauna/appdata/local/temp/16.html).
+
+#### Show derivative of the Sigmoid Function
+We'll notice it has a lovely derivative, and it's used more commonly in its derivative notation because it's easier to comprehend than pre-derived!
+
+$\sigma(x) = \frac{1}{1 + e^{-x}}$  
+
+$\sigma'(x) = \frac{\delta}{\delta x}\Big[ \frac{1}{1 + e^{-x}}\Big]$
+
+Using the quotient rule:  $=  \frac{\frac{\delta}{\delta x}\big(1\big)\cdot\big(1 + e^{-x}\big) - \big(1\big)\cdot\frac{\delta}{\delta x}\big(1 + e^{-x}\big)}{\big(1 + e^{-x}\big)^2}$
+$= \frac{ 0 - \frac{\delta}{\delta x}(1 + e^{-x})}{(1 + e^{-x})^2}$
+
+Using the basic sum rule:  $= \frac{-\frac{\delta}{\delta x}\big(1\big) + \frac{\delta}{\delta x}\big(e^{-x}\big)}{\big(1 + e^{-x}\big)^2}$
+$= \frac{-\frac{\delta}{\delta x}\big(e^{-x}\big)}{\big(1 + e^{-x}\big)^2}$
+
+$= \frac{-\frac{\delta}{\delta x}\big(\frac{1}{e^{x}}\big)}{\big(1 + e^{-x}\big)^2}$ and using the Quotient Rule on the numerator:
+
+$= \frac{\Bigg(\frac{-\frac{\delta}{\delta x}\big(1\big)\cdot\big(e^x\big) - \frac{\delta}{\delta x}\big(e^{x}\big)\cdot\big(1\big)}{\big(e^{2x}\big)}\Bigg)} {\big(1 + e^{-x}\big)^2}$ 
+
+Yes, I know that's complicated, but I think it's easier to understand than if we'd used the Chain Rule rather than the Quotient Rule. (I don't understand which function starts where, for the chain rule, whereas I understand a quotient.)
+
+We know $\frac{\delta}{\delta x}(e^{x}) = e^{x}$. So then
+
+$= \frac{\bigg(\frac{-\big(0\big) - e^{x}}{\big(e^{2x}\big)}\bigg)}{(1 + e^{-x})^2}$
+
+$= \frac{ \bigg(\frac{e^{x}}{e^{2x}}\bigg)} {(1 + e^{-x})^2}$
+
+$= \frac{ \big(\frac{1}{e^{x}}\big)}{(1 + e^{-x})^2}$ and since $\frac{1}{e^{x}}$ is $e^{-x}$, we end up with
+
+$\sigma'(x) = \frac{e^{-x}}{(1 + e^{-x})^2}$  
+
+Phew!!  But this isn't very nice to look at.  
+Let's add and subtract 1, which of course doesn't alter anything, but gives us a bit to work with.
+
+$= \frac{+ 1 - 1 + e^{-x}}{(1 + e^{-x})^2}$
+
+You might notice that $(1 + e^{-x})$ is available in both the numerator and the denominator. What if we separate that out?
+
+$= \frac{(1 + e^{-x}) - 1}{(1 + e^{-x})^2}$ equals the same thing as $\frac{(1 + e^{-x})}{(1 + e^{-x})^2} + \frac{-1}{(1 + e^{-x})^2}$
+
+$= \frac{1}{(1 + e^{-x})} - \frac{1}{(1 + e^{-x})^2}$
+
+$\sigma'(x) = \Big(\frac{1}{1 + e^{-x}}\Big)\cdot\Big(1 - \frac{1}{1 + e^{-x}}\Big)$  
+
+And that's it! And since $(\frac{1}{1 + e^{-x}})$ is the original $\sigma(x)$, then we can replace those to become:
+
+$\sigma'(x) = \sigma(x)(1 - \sigma(x))$
+
+Good job! :)
+
+#### Back to our Error Formula ####
+
+$E = -\frac{1}{m} \sum^{m}_{i=1} \big(y_{i}ln(\hat{y}_{i}) + (1 - y_{i})ln(1 - \hat{y}_{i}) \big)$
 
 ### Logistic Regression Algorithm
+
 
 ### Pre-Notebook: Gradient Descent
 
