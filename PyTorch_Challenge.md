@@ -44,7 +44,7 @@ Deep learning:
 
 And we'll be ending with building this from scratch!!!  
 
-![challenge project](pytorch-project-image.PNG){.center}
+![challenge project](pytorch-project-image.png){.center}
 <style>
   .markdown-body .center {
     display: block;
