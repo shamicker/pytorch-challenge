@@ -429,7 +429,7 @@ $E = -\frac{1}{m} \sum^{m}_{i=1} \big(y_{i}ln(\hat{y}_{i}) + (1 - y_{i})ln(1 - \
 
 
 ### Pre-Notebook: Gradient Descent
-
+ 
 ### Notebook: Gradient Descent
 
 ### Perceptron vs Gradient Descent
