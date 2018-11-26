@@ -76,13 +76,13 @@ We know that:
 - student A: 9/10 on a test, 8/10 grades - passes the class  
 - student B: 3/10 on test, 4/10 grades - fails the class  
 Does student C pass or fail? S/he has 7/10 on test, 6/10 grades? One way to find out is to plot the students' marks:
-![plot marks on a graph](images/classification-ex.png){.half1}
+![plot marks on a graph](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/classification-ex.png){.half1}
 ~~(above) Plot of the first 2 students~~
 
-![plot all known marks](images/classification-ex2.png){.half}
+![plot all known marks](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/classification-ex2.png){.half}
 ~~Plot the whole class~~
 
-![divide categories (classify them)](images/classification-ex2-answer.png){.half}
+![divide categories (classify them)](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/classification-ex2-answer.png){.half}
 ~~The best linear boundary to divide the Passes from the Fails~~
 <style>
   .markdown-body{width: 90%;}
@@ -115,7 +115,7 @@ This boundary is linear; ie. a single, straight line. Calculated by ![w_{1}x_{1}
 </style>
 
 For a computer, we need an equation to create this boundary.
-![linear boundary equation for this example](images/equation.png)
+![linear boundary equation for this example](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/equation.png)
 
 A general linear boundary equation is ![w_{1}x_{1} + w_{2}x_{2} + b = 0](https://latex.codecogs.com/gif.latex?w_%7B1%7Dx_%7B1%7D%20&plus;%20w_%7B2%7Dx_%7B2%7D%20&plus;%20b%20%3D%200){.snippet}, abbreviated in vector notation as ![abbrev equation](https://latex.codecogs.com/gif.latex?Wx%20&plus;%20b%20%3D%200){.snippet}, where `W`{.snippet} is the vector ![vector W](https://latex.codecogs.com/gif.latex?W%20%3D%20%28w_%7B1%7D%2C%20w_%7B2%7D...%29){.snippet}, *x* is the vector ![vector x](https://latex.codecogs.com/gif.latex?x%20%3D%20%28x_%7B1%7D%2C%20x_%7B2%7D...%29){.snippet}, and the equation is *W* times *x* plus *b*. We'll refer to *x* as the **inputs**, *W* as the **weights**, and *b* as the **bias**.
 
@@ -126,7 +126,7 @@ Our prediction will be *"y hat equals 1 if above the line, or y hat equals 0 if 
 
 ***NOTE:*** y is the ACTUAL solution vector, while ![\hat{y}](https://latex.codecogs.com/gif.latex?%5Cinline%20%5Chat%7By%7D){.snippet} is the PREDICTED solution.
 
-![y hat = 1 or 0](images/y-hat.png)
+![y hat = 1 or 0](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/y-hat.png)
 
 ### Higher Dimensions
 Higher dimensional boundaries are needed when there are more data points to look at.  
@@ -142,12 +142,12 @@ There are also even higher dimensions with ![w1x1 + w2x2 + ... + wnxn + b = 0](h
    - the calculation is also in a node  
    - the prediction (score or y-hat) is the return value
 
-![perceptron using our example](images/perceptron-example.png){.half}
-![perceptron with summing equation](images/perceptron-summation.png){.half}
+![perceptron using our example](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/perceptron-example.png){.half}
+![perceptron with summing equation](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/perceptron-summation.png){.half}
 
 In our example, we're using an implicit function called a **step function**. This is sometimes viewed in its own node, in which case the *linear function* is in a node where the calculation occurs ("the first node calculates the linear equation on the inputs of the weights"), and the *step function* is in a node where the step function is applied to the result of the calculation.
 
-![perceptron showing both the linear function and the step function](images/perceptron-linear-stepfunction.png){.half}
+![perceptron showing both the linear function and the step function](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/perceptron-linear-stepfunction.png){.half}
 
 In the future, we'll be using different step functions, so it is useful to specify it in the node.
 
@@ -158,11 +158,11 @@ In the same way the *input* nodes are one-way to the calculation node, resulting
 
 So far, we're working with a single "neuron". Later it'll get more complicated with whole networks of these calculations!
 
-![perceptron vs neuron](images/neurons.png){.half}
+![perceptron vs neuron](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/neurons.png){.half}
 
 ### Perceptrons as Logical Operators ###
 Perceptrons can be used as logical operators as well.  
-![an AND perceptron](images/perceptron-and.png){.quarter}
+![an AND perceptron](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/perceptron-and.png){.quarter}
 <style type="text/css">
   .quarter { width: 30%; }
 </style>
@@ -170,26 +170,26 @@ Perceptrons can be used as logical operators as well.
 #### AND Perceptron
 QUIZ: What are the weights and bias for the AND perceptron?  
 More than 1 set of values will work!  
-![an AND perceptron visualized](images/and-perceptron.png){.half}
+![an AND perceptron visualized](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/and-perceptron.png){.half}
 
 #### OR Perceptron
 QUIZ: What are the weights and bias for the OR perceptron?  
 Basically, the weights work together to create the angle of the linear boundary (think of it like a teeter-totter where different weights on the x's change the angle) and the bias (actually it's the *difference* between the bias and the weighted inputs) sort of moves that boundary left or right. SO to move the boundary over (while maintaining the same angle), you can either change the weights (by the same amount) OR change the bias.  
-![an OR perceptron visualized](images/perceptron-or.png){.half}
+![an OR perceptron visualized](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/perceptron-or.png){.half}
 
 #### NOT Perceptron ####
 The **NOT** only cares about a single input (like, for input (0, 1) it cares only about either the 0 or the 1); all other inputs are ignored. This single input is then turned into the opposite.
 
 #### XOR Perceptron ####
 The **XOR** perceptron returns a positive value ONLY when the inputs are different (I think?).  
-![an XOR perceptron visualized](images/perceptron-xor.png){.half}
+![an XOR perceptron visualized](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/perceptron-xor.png){.half}
 
 As you can see, it's not the regular **OR** since the first input (1,1) returns a false value! To get around this, we have to create a *multi-layer perceptron* or a (very basic) neural network. 
 
 **NAND** is short for **NOT AND**.  
 
-![an XOR neural network](images/xor-neuralnetwork.png){.smaller_half} 
-![an XOR multi-layer perceptron](images/xor-multi-layer-perceptron.png){.smaller_half}
+![an XOR neural network](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/xor-neuralnetwork.png){.smaller_half} 
+![an XOR multi-layer perceptron](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/xor-multi-layer-perceptron.png){.smaller_half}
 <style type="text/css">
   .smaller_half {width: 45%;}
 </style>
@@ -199,7 +199,7 @@ Since we can't calculate the linear boundary by hand every time, we can get a co
 
 The computer begins with a random equation (random line). The correctly classified data points say "I am good!", and the incorrect points say "Come closer!". Obviously the computer doesn't understand English that way (and nor do the points), so it's using an adjustment equation.
 
-![perceptron trick cartoon](images/perceptron-trick.png)
+![perceptron trick cartoon](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/perceptron-trick.png)
 
 Example: A random equation of ![3x1 + 4x2 - 10 = 0](https://latex.codecogs.com/gif.latex?%5Cinline%203x_%7B1%7D%20&plus;%204x_%7B2%7D%20-%2010%20%3D%200){.snippet}. If we have a point (1,1) inside the current negative area that should be in the positive area, the computer should add the data point to the equation (with 1 as the bias). However, since this drastically changes the equation and might be overkill, we use a ***learning rate***. In this case it'll be 0.1, so we only add a 10th of the incorrectly classified data point. So the new equation becomes ![3.1x_1 + 4.1x_2 - 9.9 = 0](https://latex.codecogs.com/gif.latex?%5Cinline%203.1x_%7B1%7D%20&plus;%204.1x_%7B2%7D%20-%209.9%20%3D%200){.snippet}.
 
@@ -238,12 +238,12 @@ Also, penalties (distance points) are included but minimal for *correctly* class
 ### Discrete vs Continuous ###
 Currently, our algorithm (linear boundary) is discrete (the answer is either Yes (1) or No (0)). We need to convert it to a continuous outcome. So we'll change from a **step function** to a **sigmoid function**.
 
->![activation functions](images/activation_functions.png){.half}
+>![activation functions](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/activation_functions.png){.half}
 
 A *sigmoid function* gives us a probability of passing. The high end approaches 1, while the negative approaches 0. The middle is 50%, which is when the linear boundary `Wx + b` equalled 0.
 
-![activation function predictions](images/activation_function_predictions.png){.half1}  
-![sigmoid function formula](images/sigmoid_function.png){.quarter}
+![activation function predictions](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/activation_function_predictions.png){.half1}  
+![sigmoid function formula](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/sigmoid_function.png){.quarter}
 
 ```
 @Zenquiorra (on slack)
@@ -267,22 +267,22 @@ The **Softmax Function** is defined as:
 
 For linear function scores: ![Z1, Z2, ... Zn](https://latex.codecogs.com/gif.latex?%5Cinline%20Z_%7B1%7D...Z_%7Bn%7D){.snippet} (each is a score for each of the classes), the probability (P) that the object in some class i is (as follows):
 
->![probability of class i](images/softmax_function.png){.quarter}
+>![probability of class i](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/softmax_function.png){.quarter}
 
 ### One-Hot Encoding ###
 If you only have 2 input variables, it's easy to numerize them: it's `1` or `0`.  
 But if you have multiple inputs, you can't put `0, 1, 2`, because that assumes a dependence between classes (ie a hierarchy or something). What's the solution?
 
 The solution is kind of like binary; it's an identity matrix, which is the matrix equivalent of 1. (Like, you can multiply ANY matrix by an identity matrix and you'll get the original matrix back.)  
-> ![it's an identity matrix](images/identity_matrix.png){.half}
+> ![it's an identity matrix](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/identity_matrix.png){.half}
 
-![one-hot encoding](images/one-hot_encoding.png){.smaller_half}
+![one-hot encoding](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/one-hot_encoding.png){.smaller_half}
 
 ### Maximum Likelihood ###
 Given any 2 linear boundaries in an example model (say, our students' model), which line is a better line? Here is where we'll need an equation to calculate each line's probability.
 
 **Method:** multiply all the y_hat values together to get the total probability (of all combined data points).  
-![total probability examples](images/maximum_likelihood.png){.half}
+![total probability examples](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/maximum_likelihood.png){.half}
 
 ### Maximizing Probabilities ###
 Remember that we're talking about **Error Function**, and that we want to *minimize* the error function. And also we want to *maximize* the probability. So maybe these 2 work together, or are even the same thing.
@@ -291,13 +291,13 @@ However! Products are tough - and for potentially thousands of numbers between 0
 Instead, we want to take sums and *turn them into products*!!  
 
 It turn out that:
->![log of (ab) = log of a + log of b](images/log_for_sums.png){.half}
+>![log of (ab) = log of a + log of b](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/log_for_sums.png){.half}
 
 #### Logarithm Reminder ####
->![log explanation](images/log_defined.png){.half}
+>![log explanation](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/log_defined.png){.half}
 
 
-![a log from a tree](images/log.jpg){.one_third} == ![an image of Rosie as a witch](images/witch_power.jpg){.one_third}  
+![a log from a tree](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/log.jpg){.one_third} == ![an image of Rosie as a witch](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/witch_power.jpg){.one_third}  
 <style type="text/css">
   .one_third{
     width: 15%;
@@ -309,7 +309,7 @@ Maybe easier to remember: "log" == "to which power?"
 "From now until the end of class, we'll be taking the natural logarithm,  which is base e instead of 10. Nothing different happens to base 10; everything works the same cuz everything gets scale by the same factor so it's just more for convention."  
 
 Where **ln** is logarithm:
->![the product in our examples vs the natural logarithm](images/base_e.png){.eighty}
+>![the product in our examples vs the natural logarithm](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/base_e.png){.eighty}
 <style type="text/css">
   .eighty { width: 80%; }
 </style>
@@ -335,11 +335,11 @@ and then `input 1 + input 2` equals the **cross entropy**.
 **Note** that `no` can be written as `0`, so `1-0` is also valid.  
 **Note** that `input b` is `1 - input a` since inputs a and b add up to 1!
 
->![cross entropy example and formula](images/cross-entropy.png){.half1}
+>![cross entropy example and formula](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/cross-entropy.png){.half1}
 
 ### Multi-Class Cross Entropy ###
 This formula works for multiple unrelated classes.
-![multiple classed cross entropy example](images/multiclass-crossentropy.png){.half1}
+![multiple classed cross entropy example](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/multiclass-crossentropy.png){.half1}
 
 Where:
 `p` is the probability  
@@ -347,7 +347,7 @@ Where:
 `n` is the number of doors, starting at `i`  
 `m` is the number of animals (or *classes*), starting at `j`
 
-![multi-class cross entropy formula and example](images/multiclass-crossentropy2.png){.half1}
+![multi-class cross entropy formula and example](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/multiclass-crossentropy2.png){.half1}
 
 ### Logistic Regression ###
 **Logistic Regression**: "the building block of all that constitutes Deep Learning!"  
@@ -360,15 +360,15 @@ Basically:
 - enjoy!
 
 To recap the cross entropy function:  
-![error function explanation](images/error-function-pre-formula.png)
+![error function explanation](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/error-function-pre-formula.png)
 
 The difference between the *cross-entropy* and the *error* functions is just that we **take the average of the cross-entropy function** to get the error function.
 
 And in terms of weights `W` and bias `b`:  
-![error function in terms of W and b](images/error-function.png)
+![error function in terms of W and b](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/error-function.png)
 
 Difference between binary and multiclass formulas: (images give class types)
-![2-class and multi-class formulas](images/2-to-many-class-entropy-formulas.png)
+![2-class and multi-class formulas](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/2-to-many-class-entropy-formulas.png)
 
 ### Gradient Descent ###
 If you need a math review for this, you can find it [at this spot](math_review_for_understanding_gradient_descent.md) or [here on my computer...](file:///C:/users/shauna/appdata/local/temp/16.html).
