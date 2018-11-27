@@ -373,74 +373,124 @@ Difference between binary and multiclass formulas: (images give class types)
 ### Gradient Descent ###
 If you need a math review for this, you can find it [at this spot](math_review_for_understanding_gradient_descent.md) or [here on my computer...](file:///C:/users/shauna/appdata/local/temp/16.html).
 
-#### Show derivative of the Sigmoid Function
-We'll notice it has a lovely derivative, and it's used more commonly in its derivative notation because it's easier to comprehend than pre-derived!
+The derivative of the Sigmoid Function is really nice, and it is used more often in some cases (ie backpropagation). More on this later.
 
-$\sigma(x) = \frac{1}{1 + e^{-x}}$  
+The Sigmoid Function:  $\sigma(x) = \frac{1}{(1 + e^{-x})}$
 
-$\sigma'(x) = \frac{\delta}{\delta x}\Big[ \frac{1}{1 + e^{-x}}\Big]$
+Its derivative:  $\sigma'(x) = \sigma(x)(1 - \sigma(x))$
 
-Using the quotient rule:  $=  \frac{\frac{\delta}{\delta x}\big(1\big)\cdot\big(1 + e^{-x}\big) - \big(1\big)\cdot\frac{\delta}{\delta x}\big(1 + e^{-x}\big)}{\big(1 + e^{-x}\big)^2}$
-$= \frac{ 0 - \frac{\delta}{\delta x}(1 + e^{-x})}{(1 + e^{-x})^2}$
+Now, the **Gradient Descent** in mathematical terms:
 
-Using the basic sum rule:  $= \frac{-\frac{\delta}{\delta x}\big(1\big) + \frac{\delta}{\delta x}\big(e^{-x}\big)}{\big(1 + e^{-x}\big)^2}$
-$= \frac{-\frac{\delta}{\delta x}\big(e^{-x}\big)}{\big(1 + e^{-x}\big)^2}$
+The Error Function is a function of the *weights*. 
 
-$= \frac{-\frac{\delta}{\delta x}\big(\frac{1}{e^{x}}\big)}{\big(1 + e^{-x}\big)^2}$ and using the Quotient Rule on the numerator:
+![error function as "mount math-er-horn"](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/error_function_gradient_descent.PNG)
 
-$= \frac{\Bigg(\frac{-\frac{\delta}{\delta x}\big(1\big)\cdot\big(e^x\big) - \frac{\delta}{\delta x}\big(e^{x}\big)\cdot\big(1\big)}{\big(e^{2x}\big)}\Bigg)} {\big(1 + e^{-x}\big)^2}$ 
+The gradient of E is given by the **partial derivatives** with respect to $w_{1}$ and $w_{2}$. Wherever we're "standing", we'll take the **negative** of the gradient of the Error function at that point, repeatedly until we're all good.
 
-Yes, I know that's complicated, but I think it's easier to understand than if we'd used the Chain Rule rather than the Quotient Rule. (I don't understand which function starts where, for the chain rule, whereas I understand a quotient.)
+Where the gradient is **the direction of steepest ascent** (see image below, where the blue arrows are shortest and the red ones are longest), we will take the **negative** of that.
 
-We know $\frac{\delta}{\delta x}(e^{x}) = e^{x}$. So then
+![direction of steepest ascent in an image](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/math_images/gradient_definition.PNG)
 
-$= \frac{\bigg(\frac{-\big(0\big) - e^{x}}{\big(e^{2x}\big)}\bigg)}{(1 + e^{-x})^2}$
+In this image/example, we want to go down the mountain in the quickest way possible. We look around us, calculate a small/safest way down, then look around and recalculate, step down again, etc.
 
-$= \frac{ \bigg(\frac{e^{x}}{e^{2x}}\bigg)} {(1 + e^{-x})^2}$
+So we have an initial prediction $\hat{y} = \sigma(Wx + b)$, which is "bad" because we are currently still really high in the mountains. We take the *gradient* of the Error function, which is the **vector produced** by the partial derivatives of the Error function, with respect to the weights and the bias. 
 
-$= \frac{ \big(\frac{1}{e^{x}}\big)}{(1 + e^{-x})^2}$ and since $\frac{1}{e^{x}}$ is $e^{-x}$, we end up with
+Now we take a step in the direction of the *negative* of the gradient. Since we don't want any dramatic changes, we have a **learning rate**. And we update the weights and bias: we take the *learning rate* times the partial derivative of the Error, with respect to the weights/bias and add them respectively.
 
-$\sigma'(x) = \frac{e^{-x}}{(1 + e^{-x})^2}$  
+In other words, we are taking the steepest step down (found by the *negative of the gradient*), and then updating our position to a fraction less steep (found by subtracting a fraction (ie the *learning rate*) of the steepness vector). And we repeat until we have the best outcome, which is us at the lowest point in the mountains.
 
-Phew!!  But this isn't very nice to look at.  
-Let's add and subtract 1, which of course doesn't alter anything, but gives us a bit to work with.
+To reiterate slightly mathematically, at a coordinate x, the gradient of the Error function is $\Delta E = -(y - \hat{y})(x_{1}, x_{2}, ..., x_{n}, 1)$.
 
-$= \frac{+ 1 - 1 + e^{-x}}{(1 + e^{-x})^2}$
+This means that the gradient is actually a **scalar** times the coordinates of the point. And the **scalar** is a multiple of the difference between $y$ and $\hat{y}$.
 
-You might notice that $(1 + e^{-x})$ is available in both the numerator and the denominator. What if we separate that out?
+Which means the smaller the prediction, the smaller the gradient. And the bigger the prediction, the bigger the gradient. 
 
-$= \frac{(1 + e^{-x}) - 1}{(1 + e^{-x})^2}$ equals the same thing as $\frac{(1 + e^{-x})}{(1 + e^{-x})^2} + \frac{-1}{(1 + e^{-x})^2}$
-
-$= \frac{1}{(1 + e^{-x})} - \frac{1}{(1 + e^{-x})^2}$
-
-$\sigma'(x) = \Big(\frac{1}{1 + e^{-x}}\Big)\cdot\Big(1 - \frac{1}{1 + e^{-x}}\Big)$  
-
-And that's it! And since $(\frac{1}{1 + e^{-x}})$ is the original $\sigma(x)$, then we can replace those to become:
-
-$\sigma'(x) = \sigma(x)(1 - \sigma(x))$
-
-Good job! :)
-
-#### Back to our Error Formula ####
-
-$E = -\frac{1}{m} \sum^{m}_{i=1} \big(y_{i}ln(\hat{y}_{i}) + (1 - y_{i})ln(1 - \hat{y}_{i}) \big)$
+Which means the higher up in the mountains we are, the bigger the steps we need to take to get down. And presumably, smaller steps nearer the bottom.
 
 ### Logistic Regression Algorithm
+So the pseudo-code:  
+- With random starting weights: (w_{1}, ... w_{n}, b)  
+- For every point in our coordinate x we calculate the error:  
+    - For each point:  
+        - Update the weights: $w'_{i} \gets w_{i} - \alpha(\hat{y} - y)x_{i}$  
+        - Update the bias: $b'_{i} \gets b_{i} - \alpha(\hat{y} - y)$  
+- Repeat either a fixed number of times, or until the error is small.
 
+This looks suspiciously similar to the Perceptron Algorithm.
 
 ### Pre-Notebook: Gradient Descent
- 
+This was just instructions to do the next step.
 ### Notebook: Gradient Descent
+This was a "homework" task: Basically, like the Perceptron Algorithm, code the Logistic Regression Algorithm steps in Python.
 
 ### Perceptron vs Gradient Descent
+If you compare these two calculations, you'll notice they're the same. 
+
+#### Perceptron Algorithm
+We updated the weights and the bias ONLY if they were mis-classified. Also, $y$ and $\hat{y}$ were ONLY `1` or `0`.
+
+#### Gradient Descent Algorithm (logistic regression)
+We updated ALL the weights and the bias whether they were misclassified or not. Also, $y$ and $\hat{y}$ are a range between `0` and `1`. If the points are correctly classified, it's telling the line to go farther away.
 
 ### Continuous Perceptrons
+Recap!
+We have a bunch of points on a plane, red & blue, and a linear boundary. We ask each point if it's classified correctly or where the line should go. 
+
+The perceptron has nodes $x_{1}$ and $x_{2}$, with **edges** of the weights' values, and the 2 nodes are connected to another node with the bias. Then a decision is made as the output. Just as a human neuron kind of works, with inputs, edges/weights, a decision, and an output.
 
 ### Non-Linear Data
+There are also non-linear datasets.
 
 ### Non-Linear Models
+We're going to look at how to get this curve, below! We'll still use gradient descent, but it is obviously not linear.
+
+![a curve!](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/non-linear_models.PNG)
 
 ### Neural Network Architecture
+The way we will do this is to put together multiple perceptrons! Even linear ones.
+
+![combining linear regions](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/combining_regions.PNG)
+
+The 2 linear boundaries can be added together to get a number. Actually, they can even be weighted differently, and a bias added too! It gives a number larger than `1`, so we can just apply the **sigmoid function** to it to get the probability of a point being properly classified.
+
+![2 linear boundaries can be added & even weighted](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/multi-layer_linear_boundary.PNG)
+
+This looks an awful lot like a Perceptron! Yeah!
+
+Take 2 examples and put them side by side. ![side by side](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_step_1.PNG)
+
+It's about to happen... ![neural network about to happen](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_step_2.PNG)
+
+Then combine them. A neural network!! ![neural network](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_joined.PNG)
+
+Clean them up; note that both $x_{1}$ and $x_{2}$ are still connected to both nodes by their respective weights. ![neural network all fancy-like](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_cleaned_up.PNG)
+
+And here's an alternate notation! On the left, what we're used to, the bias is in a separate node. In the right, in every layer we have a **bias unit** coming from a node with a `1` on it. You'll notice the *bias units* `-8`, `1`, and `-6`, and they all go to nodes with sigmoid activations. So the bias `-8` becomes an **edge** that goes from the bias node to the sigmoid activation node.
+![alternate notation](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_alternate_notation.PNG)
+
+#### Multiple Layers
+First layer is called the **input layer** and contains the inputs: $x_{1}$ and $x_{2}$
+
+Second layer is the **hidden layer**. Set of linear models created with the input layer.
+
+Final layer is the **output layer**, where the linear models get combined to get the non-linear model.
+
+Obviously, there are many different models; they don't all look the same. We can add more nodes to the input, hidden, and output layers. We can also add more layers!
+
+For example, you could have one with 2 inputs but 3 hidden layers, combining 3 linear models to get a triangular model in the output layer.  ![more hidden layers](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/extra_hidden_layers.PNG)
+
+Or, if we have 3 inputs? We're in the 3-D space then! In general, `n` nodes means `n-D` space. ![3 inputs means 3-D space](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/triple_inputs.PNG)
+
+Or, more output nodes? More outputs! It might be a multi-class classification model, like a 3-output of `cat`, `dog`, `bird`. ![3 outputs?](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/triple_output.PNG)
+
+Or, more layers? This is a Deep Neural Network. Each linear model combines with others to get more and more complex models. ![more layers?](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/more_layers.PNG)  And they can just keep going, getting more & more complex! Think self-driving cars, etc. ![layers and layers and layers](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/layers_and_layers_and_layers.PNG)
+
+#### Multi-Class Classification
+How do we get multi-class outputs?  
+
+One way is to build a model for *each* output probability. This seems like overkill.
+
+A better way is to just have output nodes for each class, giving a probability for each animal (one node => probability of one animal), and to calculate the Softmax Function.
 
 ### Feedforward
 

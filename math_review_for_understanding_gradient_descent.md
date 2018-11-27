@@ -62,8 +62,70 @@ which is **rise over run**, which equals
 and if ![y = x-squared](https://latex.codecogs.com/gif.latex?y%20%3D%20x%5E%7B2%7D){.snippet}, then:
 
 
-A formula, ${e}^{i\pi }+1=0$, inside a paragraph.  
-A formula, ${e}^{i\pi }+1=0$, inside a paragraph.  
-${e}^{i\pi }+1=0$  
-${e}^{i\pi }+1=0$  
-$y = x^2$
+#### Show derivative of the Sigmoid Function
+We'll notice it has a lovely derivative, and it's used more commonly in its derivative notation because it's easier to comprehend than pre-derived!
+
+$\sigma(x) = \frac{1}{1 + e^{-x}}$  
+
+$\sigma'(x) = \frac{\delta}{\delta x}\Big[ \frac{1}{1 + e^{-x}}\Big]$
+
+Using the quotient rule:  $=  \frac{\frac{\delta}{\delta x}\big(1\big)\cdot\big(1 + e^{-x}\big) - \big(1\big)\cdot\frac{\delta}{\delta x}\big(1 + e^{-x}\big)}{\big(1 + e^{-x}\big)^2}$
+$= \frac{ 0 - \frac{\delta}{\delta x}(1 + e^{-x})}{(1 + e^{-x})^2}$
+
+Using the basic sum rule:  $= \frac{-\frac{\delta}{\delta x}\big(1\big) + \frac{\delta}{\delta x}\big(e^{-x}\big)}{\big(1 + e^{-x}\big)^2}$
+$= \frac{-\frac{\delta}{\delta x}\big(e^{-x}\big)}{\big(1 + e^{-x}\big)^2}$
+
+$= \frac{-\frac{\delta}{\delta x}\big(\frac{1}{e^{x}}\big)}{\big(1 + e^{-x}\big)^2}$ and using the Quotient Rule on the numerator:
+
+$= \frac{\Bigg(\frac{-\frac{\delta}{\delta x}\big(1\big)\cdot\big(e^x\big) - \frac{\delta}{\delta x}\big(e^{x}\big)\cdot\big(1\big)}{\big(e^{2x}\big)}\Bigg)} {\big(1 + e^{-x}\big)^2}$ 
+
+Yes, I know that's complicated, but I think it's easier to understand than if we'd used the Chain Rule rather than the Quotient Rule. (I don't understand which function starts where, for the chain rule, whereas I understand a quotient.)
+
+We know $\frac{\delta}{\delta x}(e^{x}) = e^{x}$. So then
+
+$= \frac{\bigg(\frac{-\big(0\big) - e^{x}}{\big(e^{2x}\big)}\bigg)}{(1 + e^{-x})^2}$
+
+$= \frac{ \bigg(\frac{e^{x}}{e^{2x}}\bigg)} {(1 + e^{-x})^2}$
+
+$= \frac{ \big(\frac{1}{e^{x}}\big)}{(1 + e^{-x})^2}$ and since $\frac{1}{e^{x}}$ is $e^{-x}$, we end up with
+
+$\sigma'(x) = \frac{e^{-x}}{(1 + e^{-x})^2}$  
+
+Phew!!  But this isn't very nice to look at.  
+Let's add and subtract 1, which of course doesn't alter anything, but gives us a bit to work with.
+
+$= \frac{+ 1 - 1 + e^{-x}}{(1 + e^{-x})^2}$
+
+You might notice that $(1 + e^{-x})$ is available in both the numerator and the denominator. What if we separate that out?
+
+$= \frac{(1 + e^{-x}) - 1}{(1 + e^{-x})^2}$ equals the same thing as $\frac{(1 + e^{-x})}{(1 + e^{-x})^2} + \frac{-1}{(1 + e^{-x})^2}$
+
+$= \frac{1}{(1 + e^{-x})} - \frac{1}{(1 + e^{-x})^2}$
+
+$\sigma'(x) = \Big(\frac{1}{1 + e^{-x}}\Big)\cdot\Big(1 - \frac{1}{1 + e^{-x}}\Big)$  
+
+And that's it! And since $(\frac{1}{1 + e^{-x}})$ is the original $\sigma(x)$, then we can replace those to become:
+
+$\sigma'(x) = \sigma(x)(1 - \sigma(x))$
+
+Good job! :)
+
+### Calculating the Gradient Descent
+The Error formula:
+
+$E = -\frac{1}{m} \sum^{m}_{i=1} \big(y_{i}ln(\hat{y}_{i}) + (1 - y_{i})ln(1 - \hat{y}_{i}) \big)$
+
+To calculate the gradient of E (the Error), at a specific point x, it's $\Delta E = \big(\frac{\delta}{\delta w_{1}}E, \frac{\delta}{\delta w_{2}}E, ..., \frac{\delta}{\delta w_{n}}E, \frac{\delta}{\delta b}E\big)$.
+
+It's the error that each point produces, and calculate the derivative of this error. The TOTAL error is just the average of error at all points. ie, $E = -yln(\hat{y}) - (1-y)ln(1-\hat{y})$.
+
+Anyways, skipping some explanations, we get that the **derivative of the Error** at a point `x` with respect to weight `w_{j}` is $-(y - \hat{y})x_{j})$, and with respect to `b` is $-(y - \hat{y})$.
+
+**Which all shows** that, at a coordinate x, the gradient of the Error function is $\Delta E = -(y - \hat{y})(x_{1}, x_{2}, ..., x_{n}, 1)$.
+
+And **THIS all means** that the gradient is actually a **scalar** times the coordinates of the point. And the **scalar** is a multiple of the difference between `y` and `\hat{y}`.
+
+Which means the smaller the prediction, the smaller the gradient. And the bigger the prediction, the bigger the gradient. 
+
+Which means the higher up in the mountains we are, the bigger the steps we need to take to get down. And presumably, smaller steps nearer the bottom.
+
