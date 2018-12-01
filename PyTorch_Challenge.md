@@ -274,7 +274,7 @@ If you only have 2 input variables, it's easy to numerize them: it's `1` or `0`.
 But if you have multiple inputs, you can't put `0, 1, 2`, because that assumes a dependence between classes (ie a hierarchy or something). What's the solution?
 
 The solution is kind of like binary; it's an identity matrix, which is the matrix equivalent of 1. (Like, you can multiply ANY matrix by an identity matrix and you'll get the original matrix back.)  
-> ![it's an identity matrix](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/identity_matrix.PNG){.half}
+> ![it's an identity matrix](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/math_images/identity_matrix.PNG){.half}
 
 ![one-hot encoding](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/one-hot_encoding.PNG){.smaller_half}
 
@@ -493,6 +493,29 @@ One way is to build a model for *each* output probability. This seems like overk
 A better way is to just have output nodes for each class, giving a probability for each animal (one node => probability of one animal), and to calculate the Softmax Function.
 
 ### Feedforward
+Now that we've defined *neural networks*, we need to learn how to train them. This just means "What parameters should they have on the edges in order to model our data well?"
+
+![feedforward diagram (partial)](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/feedforward.PNG)
+
+**Feedforward** is the process neural networks use to turn the input into an output.  
+
+In the image above, we have a linear boundaries $Wx + b$. No matter how many nodes we're working with, we have our `x` vector $(x_{1}, x_{2})$ and `b` which can be considered in neutral to be `1`, which gives us our first vector $\begin{bmatrix} x_1\\ x_2\\ 1\\
+\end{bmatrix}$.
+
+Next, we multiply by the matrix $W^{(1)}$ which is all the **input layer**'s weights, as shown in red in the image.
+
+Then we take the next layer, which is the Sigmoid nodes, meaning we apply the Sigmoid function.  
+![feedforward sigmoid step](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/feedforward-sigmoid-step.PNG)
+
+Then there's another set of weights $W^{(2)}$ multiplied by the other bias `1`, and then another Sigmoid function.
+
+All of this demonstrates the steps taken by a neural network to determine a prediction.
+
+>![feedforward formula](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/feedforward_formula.PNG)
+
+To train our *NN*, we need to formulate an Error Function. But look at that, we can use the same formula as before, even though our $\hat{y}$ is now a bit more complicated. Doesn't matter. Error formula still gives us a measure of how badly we're doing - something we still want to minimize.
+
+$E(W) = -\frac{1}{m} \Sigma^m_{i=1} y_{i}ln(\hat{y}_{i}) + (1 - y_{i})ln(1 - \hat{y}_{i})$
 
 ### Backpropagation
 
