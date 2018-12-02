@@ -444,29 +444,29 @@ There are also non-linear datasets.
 ### Non-Linear Models
 We're going to look at how to get this curve, below! We'll still use gradient descent, but it is obviously not linear.
 
-![a curve!](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/non-linear_models.PNG)
+![a curve!](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/non-linear_models.PNG)
 
 ### Neural Network Architecture
 The way we will do this is to put together multiple perceptrons! Even linear ones.
 
-![combining linear regions](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/combining_regions.PNG)
+![combining linear regions](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/combining_regions.PNG)
 
 The 2 linear boundaries can be added together to get a number. Actually, they can even be weighted differently, and a bias added too! It gives a number larger than `1`, so we can just apply the **sigmoid function** to it to get the probability of a point being properly classified.
 
-![2 linear boundaries can be added & even weighted](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/multi-layer_linear_boundary.PNG)
+![2 linear boundaries can be added & even weighted](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/multi-layer_linear_boundary.PNG)
 
 This looks an awful lot like a Perceptron! Yeah!
 
-Take 2 examples and put them side by side. ![side by side](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_step_1.PNG)
+Take 2 examples and put them side by side. ![side by side](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_step_1.PNG)
 
-It's about to happen... ![neural network about to happen](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_step_2.PNG)
+It's about to happen... ![neural network about to happen](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_step_2.PNG)
 
-Then combine them. A neural network!! ![neural network](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_joined.PNG)
+Then combine them. A neural network!! ![neural network](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_joined.PNG)
 
-Clean them up; note that both $x_{1}$ and $x_{2}$ are still connected to both nodes by their respective weights. ![neural network all fancy-like](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_cleaned_up.PNG)
+Clean them up; note that both $x_{1}$ and $x_{2}$ are still connected to both nodes by their respective weights. ![neural network all fancy-like](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_cleaned_up.PNG)
 
 And here's an alternate notation! On the left, what we're used to, the bias is in a separate node. In the right, in every layer we have a **bias unit** coming from a node with a `1` on it. You'll notice the *bias units* `-8`, `1`, and `-6`, and they all go to nodes with sigmoid activations. So the bias `-8` becomes an **edge** that goes from the bias node to the sigmoid activation node.
-![alternate notation](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_alternate_notation.PNG)
+![alternate notation](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/nn_alternate_notation.PNG)
 
 #### Multiple Layers
 First layer is called the **input layer** and contains the inputs: $x_{1}$ and $x_{2}$
@@ -477,13 +477,13 @@ Final layer is the **output layer**, where the linear models get combined to get
 
 Obviously, there are many different models; they don't all look the same. We can add more nodes to the input, hidden, and output layers. We can also add more layers!
 
-For example, you could have one with 2 inputs but 3 hidden layers, combining 3 linear models to get a triangular model in the output layer.  ![more hidden layers](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/extra_hidden_layers.PNG)
+For example, you could have one with 2 inputs but 3 hidden layers, combining 3 linear models to get a triangular model in the output layer.  ![more hidden layers](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/extra_hidden_layers.PNG)
 
-Or, if we have 3 inputs? We're in the 3-D space then! In general, `n` nodes means `n-D` space. ![3 inputs means 3-D space](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/triple_inputs.PNG)
+Or, if we have 3 inputs? We're in the 3-D space then! In general, `n` nodes means `n-D` space. ![3 inputs means 3-D space](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/triple_inputs.PNG)
 
-Or, more output nodes? More outputs! It might be a multi-class classification model, like a 3-output of `cat`, `dog`, `bird`. ![3 outputs?](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/triple_output.PNG)
+Or, more output nodes? More outputs! It might be a multi-class classification model, like a 3-output of `cat`, `dog`, `bird`. ![3 outputs?](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/triple_output.PNG)
 
-Or, more layers? This is a Deep Neural Network. Each linear model combines with others to get more and more complex models. ![more layers?](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/more_layers.PNG)  And they can just keep going, getting more & more complex! Think self-driving cars, etc. ![layers and layers and layers](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/layers_and_layers_and_layers.PNG)
+Or, more layers? This is a Deep Neural Network. Each linear model combines with others to get more and more complex models. ![more layers?](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/more_layers.PNG)  And they can just keep going, getting more & more complex! Think self-driving cars, etc. ![layers and layers and layers](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/layers_and_layers_and_layers.PNG)
 
 #### Multi-Class Classification
 How do we get multi-class outputs?  
@@ -495,7 +495,7 @@ A better way is to just have output nodes for each class, giving a probability f
 ### Feedforward
 Now that we've defined *neural networks*, we need to learn how to train them. This just means "What parameters should they have on the edges in order to model our data well?"
 
-![feedforward diagram (partial)](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/feedforward.PNG)
+![feedforward diagram (partial)](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/feedforward.PNG)
 
 **Feedforward** is the process neural networks use to turn the input into an output.  
 
@@ -505,13 +505,13 @@ In the image above, we have a linear boundaries $Wx + b$. No matter how many nod
 Next, we multiply by the matrix $W^{(1)}$ which is all the **input layer**'s weights, as shown in red in the image.
 
 Then we take the next layer, which is the Sigmoid nodes, meaning we apply the Sigmoid function.  
-![feedforward sigmoid step](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/feedforward-sigmoid-step.PNG)
+![feedforward sigmoid step](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/feedforward-sigmoid-step.PNG)
 
 Then there's another set of weights $W^{(2)}$ multiplied by the other bias `1`, and then another Sigmoid function.
 
 All of this demonstrates the steps taken by a neural network to determine a prediction.
 
->![feedforward formula](https://githubusercontent.com/shamicker/pytorch-challenge/master/images/feedforward_formula.PNG)
+>![feedforward formula](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/feedforward_formula.PNG)
 
 To train our *NN*, we need to formulate an Error Function. But look at that, we can use the same formula as before, even though our $\hat{y}$ is now a bit more complicated. Doesn't matter. Error formula still gives us a measure of how badly we're doing - something we still want to minimize.
 
