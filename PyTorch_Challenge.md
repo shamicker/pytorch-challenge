@@ -274,7 +274,7 @@ If you only have 2 input variables, it's easy to numerize them: it's `1` or `0`.
 But if you have multiple inputs, you can't put `0, 1, 2`, because that assumes a dependence between classes (ie a hierarchy or something). What's the solution?
 
 The solution is kind of like binary; it's an identity matrix, which is the matrix equivalent of 1. (Like, you can multiply ANY matrix by an identity matrix and you'll get the original matrix back.)  
-> ![it's an identity matrix](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/math_images/identity_matrix.PNG){.half}
+> ![it's an identity matrix](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/identity_matrix.PNG){.half}
 
 ![one-hot encoding](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/one-hot_encoding.PNG){.smaller_half}
 
@@ -389,7 +389,7 @@ The gradient of E is given by the **partial derivatives** with respect to $w_{1}
 
 Where the gradient is **the direction of steepest ascent** (see image below, where the blue arrows are shortest and the red ones are longest), we will take the **negative** of that.
 
-![direction of steepest ascent in an image](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/math_images/gradient_definition.PNG)
+![direction of steepest ascent in an image](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/gradient_definition.PNG)
 
 In this image/example, we want to go down the mountain in the quickest way possible. We look around us, calculate a small/safest way down, then look around and recalculate, step down again, etc.
 
@@ -518,18 +518,76 @@ To train our *NN*, we need to formulate an Error Function. But look at that, we 
 $E(W) = -\frac{1}{m} \Sigma^m_{i=1} y_{i}ln(\hat{y}_{i}) + (1 - y_{i})ln(1 - \hat{y}_{i})$
 
 ### Backpropagation
+In a nutshell, **backpropagation** will consist of:  
+- doing a feedforward operation  
+- calculating the error  
+- running the feedforward operation backwards (backpropagation) to spread the error to each of the weights  
+- use this to update the weights, and get a better model  
+- repeat this until we have a model that is good
+
+It seems that backpropagation is asking which model within the *hidden layer* is doing better, and asking each point there to give a grade, which it then uses to update the weights of the models of that layer... Am I anywhere close?
+
+#### Backpropagation Math
+As seen in the following images:
+
+##### Single Layer Perceptron Formulas
+Prediction: the sigmoid of the linear equation.
+
+Error Function: the negative average of all points, of the blue equation for the blue points, and the red equation for the red points.
+
+Gradient of the error function: the vector formed by all the partial derivatives of the error function, with respect to each of the weights and the bias (or: with respect to each of the edges).
+
+![single layer perceptron formulas](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/single_layer_perceptron_formulas.PNG)
+
+##### Multi-layer Percetpron Formulas
+Basically all the same formulas, but a bit more complicated.
+
+Prediction: a composition of functions; namely sigmoids and matrix multiplications
+
+Error Function: pretty much the same as single-layer, except the $\hat{y}$ is a bit more complicated (which we haven't really gone into).
+
+Gradient of the Error function: also about the same thing, but a heck of a lot longer! It's still the vector formed by the partial derivatives of the Error function with respect to each of the weights and biases (or: edges).
+
+![multi-layer perceptron formulas](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/multilayer_perceptron_formulas.PNG)
+
+#### Chain Rule (revision)
+Remember that the *Chain Rule* of derivatives says that when you have a function of x (say $y = f(x)$) and a function of that function (say $z = g(y)$), then in order to take the derivative of $z$ with respect to $x$, you just multiply the functions' derivatives. As in $\frac{\delta z}{\delta x} = z' \cdot y'$.
+
+**Feedforward** is literally composing a bunch of functions (ie functions of functions).   
+**Backpropagation** is literally taking the derivative at each piece.  
+And since taking the derivative of a composition is the same as multiplying the partial derivatives, then all we're gonna do is multiply a bunch of partial derivatives to get what we want!
 
 ### Pre-Notebook: Analyzing Student Data
+Instructions for Notebook.
 
 ### Notebook: Analyzing Student Data
+Wow, we stepped through the code more closely! Fun!
 
 ### Training Optimization
+There are many, many variables that could affect the outcome of our training, such as poorly chosen architecture, noisy data, model that takes years to run (who has that kind of time?), etc. 
+
+So, we need to learn how to optimize the training of our models.
 
 ### Testing
+Between a simple model that does okay, and a complex model that seems to do well, we'll generally opt to go for the simpler one. 
 
 ### Overfitting and Underfitting
+**Overfitting**: ie, trying to kill Godzilla with a fly swatter. Oversimplifying the problem. Sometimes called **error due to bias**.
+
+**Underfitting**: ie, trying to kill a fly with a bazooka; over-complexifying the problem. Sometimes referred to as **error due to variance**.
+
+It's really hard to find the right-fitting model in real life. It'll pretty much always be either over- or under- fitted. The question is, which way should we then go?
+
+It's just like fitting a pair of pants! Generally, it's better to go a little big (or overly complex), and then try some techniques to make it fit a little better.
+
+![finding the right fit](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/getting_the_right_fit.PNG)
 
 ### Early Stopping
+In order to not *overfit*, we test the model. In the image below, we want the smallest *training error* and the smallest *testing error*. If we're overfitting, the testing error starts getting bigger again, while the training error goes OCD.
+
+![You can see when we need to stop early](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/early_stopping.PNG)
+
+We test until the testing error starts getting large again, or where both errors are "just right". Then we stop the training, which is called **Early Stopping**.
 
 ### Regularization
 
