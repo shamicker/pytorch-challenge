@@ -590,28 +590,112 @@ In order to not *overfit*, we test the model. In the image below, we want the sm
 We test until the testing error starts getting large again, or where both errors are "just right". Then we stop the training, which is called **Early Stopping**.
 
 ### Regularization
+Quiz: Given a misclassified target (ie, $y = 0$) at point (-1, -1) and a correct target ($y = 1$) at point (1, 1), which of the following 2 equations gives a lower Error?  
+A) $x_{1} + x_{2}$ where $b=0$  
+or  
+B) $10x_{1} + 10x_{2}$ where $b=0$?
 
 ### Regularization 2
+The answer is B because it's correct target has a prediction of 0.9999999979 which is REALLY close to 1!
+
+However, as you may have guessed, it's not the best model since it's overfitted. Here's a visual of the issue:  
+
+![scaled sigmoid function](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/scaled_activation_functions.PNG)
+
+So how do we prevent this overfitting? **Regularization!!**
+
+Basically, we want to penalize large weights. There are 2 ways, and they each have pros and cons, and depend on our goals.
+
+**L1 Regularization**
+We add the *sums of the absolute values of the weights, times a scalar $\lambda$* to the Error Function: $error...+ \lambda(|w_{1}| + |w_{2}| + ... + |w_{n}|)$
+
+**L2 Regularization**
+We add the *sums of the squares of the weights, times that same $\lambda$ constant*: $error... + \lambda(w_{1}^2 + w_{2}^2 + ... + w_{n}^2)$
+
+**$\lambda$**
+This constant tells us how much we want to penalize the weights. If it's large, it's a big penalty.
+
+![L1 vs L2](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/which_regularization.PNG)
 
 ### Dropout
+Another way to prevent *Overfitting* is the **Dropout**.
+
+Compare it to training but having a dominant arm - that arm ends up being stronger, hogging all the training, and getting even stronger, letting the other arm doing nothing.
+
+If you incorporate the **dropout** technique, it's like taking turns training on each arm (ie: one day, left is tied behind your back, next day the other arm, then both arms tied, then both freed).
+
+Similarly in training a model, on every epoch we drop some nodes out randomly.  
+How? The algorithm gets a parameter of probability (between 0 and 1) that each node will be dropped. On average, each node will be treated with the same probability, and will be dropped equally.
 
 ### Local Minima
+**Local minimums** are valleys that are higher than the lowest valley!  
+We need a technique to deal with this scenario.
 
 ### Random Restart
+One solution is to use **random restarts**, which is just restarting at random and different points. The lowest of those descents are more likely to be the actual minimum.
+
+![random restart image](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/random_restart.PNG)
 
 ### Vanishing Gradient
+Another potential issue is the **vanishing gradient**. This is when you get the slope of the curve at a rather extreme point in the sigmoid function - the slope is nearly $0$ since it flattens out at the extremes (you know, as `x approaches 0`).
+
+These produce almost no slope, and cause us to take TINY steps when looking to descend the mountain. 
 
 ### Other Activation Functions
+The best way to fix the *vanishing gradient* is to change the *activation function*!
+
+The **Hyperbolic Tangent** function: because the range is from -1 to 1, the derivatives are larger than those of the sigmoid function.
+
+$tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$
+
+![hyperbolic tangent function](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/hyperbolic_tangent_function.PNG)
+
+Another popular function is the **Rectified Linear Unit (ReLU)**, which says "If you're positive, I'll return the same value. If you're negative, I'll return 0." Basically, if it's positive, it just returns x.
+
+Here's a multi-layer perceptron charted with the ReLU used. Note that the final activation function is Sigmoid, because the final output still needs to be a probability between 0 and 1. (Although, if the final function is ReLU, that leads to regression models which are very useful too.)
+
+![using ReLU and a final Sigmoid function](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/using_relu.PNG)
 
 ### Batch vs Stochastic Gradient Descent
+**Batch Gradient Descent** is calculating our descent with all of our data at once for every single "step" or **epoch**.
+
+However, if we take the **Stochastic gradient descent**, we take subsets of our data for each epoch. It's kind of like testing along the way.
 
 ### Learning Rate Decay
+How to tell what *learning rate* you should use? Whole papers could be written on this!
+
+But basically:  
+if your learning rate is too big, you might miss the bottom and just keep going (upwards I think?), but if it's too small, you'll never get there!
+
+The best models are those that have **decreasing learning rates**! Which means that at first they are big steps, but get smaller as you approach the minimum.
 
 ### Momentum
+Just like in real life, **momentum** can get you past the low points.
+
+In neural networks, we can sort of weight each of our previous steps (epochs), with the most recent as the most weighted) in an attempt to carry us over any **local minima** we may find and into the next valley.
+
+**Momentum** is a constant $\beta$ between $0$ and $1$. It gets attached to the steps like so:  
+- the last step is multiplied by $1$  
+- the $(n-1)$ step is multiplied by $\beta$  
+- the $(n-2)$ step is multiplied by $\beta^2$  
+- the $(n-3)$ step is multiplied by $\beta^3$  
+- etc.  
+And we take the sum of these.
 
 ### Error Functions Around the World
+There are other Error functions! We only covered these first 2.
 
+![Mount Errorest](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/error_1.PNG)
 
+![Mount Kilimanjerror](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/error_2.PNG)
+
+![Mount Reinerror](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/error_3.PNG)
+
+![Mount Ves-oops-vius](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/error_4.PNG)
+
+![Mount Eyjafvillajokull](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/error_5.PNG)
+
+![Originally Mt. Eyjafjallajokull](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/error_5-1.PNG)
 
 ## Talking PyTorch with Soumith Chintala
 Hear from Soumith Chintala, the creator of PyTorch, about the past, present, and future of the PyTorch framework.
