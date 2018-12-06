@@ -702,10 +702,25 @@ Hear from Soumith Chintala, the creator of PyTorch, about the past, present, and
 
 ETA 30 minutes
 
+I'll have to re-watch these later. A lot of it went over my head, except for the general stuff about how it was designed. Interesting though!
+
 ## Introducation to PyTorch
 Learn how to use PyTorch to build and train deep neural networks. By the end of this lesson, you will build a network that can classify images of dogs and cats with state-of-the-art performance.
 
 ETA 2 hours
+
+My notes are broken down per Jupyter Notebook in the Intro to PyTorch folder.
+
+### Tensors in PyTorch
+This is really a very basic intro to pytorch.
+
+Using `torch`, we can do all sort of math functions, like `torch.sum()`.  There's also (like in numpy) matrix multiplication (`torch.mm()` and `torch.matmul()`, with the former being more strict (and therefore more predictable)). Or `torch.randn()` to get a random number or numbers in a certain shape, depending on your input (if you enter the shape you want as a tuple).
+
+Also useful is `.view()` when you want to change the shape of your data. For example, if you have and array `a` that has a shape `(1, 3)`, you can change its shape with `a.view(3,1)` - where its parameters are the shape you want to convert it to. Like `.mm()`, this is the most strict version of other options (namely `.reshape()` and `resize_()`).
+
+PyTorch is also awesomely easy to convert to and from NumPy, using the `b = torch.from_numpy(a)`, where `a` is a numpy matrix, and back using `b.numpy()`. But **note** that the memory is shared between these objects. Meaning if you change one of them (either `a` or `b` in this example), the other will also be changed!!
+
+### Neural Networks in PyTorch
 
 ## Convolutional Neural Networks
 Learn how to use convolutional neural networks to build state-of-the-art computer vision models.
