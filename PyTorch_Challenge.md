@@ -282,7 +282,7 @@ The solution is kind of like binary; it's an identity matrix, which is the matri
 Given any 2 linear boundaries in an example model (say, our students' model), which line is a better line? Here is where we'll need an equation to calculate each line's probability.
 
 **Method:** multiply all the y_hat values together to get the total probability (of all combined data points).  
-![total probability examples](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/maximum_likelihood.PNG){.half}
+![total probability examples](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/maximum_likelihood.png){.half}
 
 ### Maximizing Probabilities ###
 Remember that we're talking about **Error Function**, and that we want to *minimize* the error function. And also we want to *maximize* the probability. So maybe these 2 work together, or are even the same thing.
@@ -352,12 +352,12 @@ Where:
 ### Logistic Regression ###
 **Logistic Regression**: "the building block of all that constitutes Deep Learning!"  
 
-Basically:
-- take your data
-- pick a random model
-- calculate the error
-- minimize the error and obtain a better model
-- enjoy!
+Basically:  
+- take your data  
+- pick a random model  
+- calculate the error  
+- minimize the error and obtain a better model  
+- enjoy!  
 
 To recap the cross entropy function:  
 ![error function explanation](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/error-function-pre-formula.PNG)
