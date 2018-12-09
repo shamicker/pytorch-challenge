@@ -219,6 +219,11 @@ So next, we're looking at a curve!
 ### Error Functions ###
 We'll be using **error functions** to tell us how far we are from the solution - just the distance from the goal.
 
+There are different kinds of error functions:  
+- log-loss error function  
+- cross entropy error function  
+- negative log loss error function (as seen in lesson 4)j
+
 ### Log-loss Error Function ###
 I didn't fully understand this. **Log-loss** wasn't mentioned and the quiz was for *gradient descent* which he said we'd look at later...?
 
@@ -274,7 +279,7 @@ If you only have 2 input variables, it's easy to numerize them: it's `1` or `0`.
 But if you have multiple inputs, you can't put `0, 1, 2`, because that assumes a dependence between classes (ie a hierarchy or something). What's the solution?
 
 The solution is kind of like binary; it's an identity matrix, which is the matrix equivalent of 1. (Like, you can multiply ANY matrix by an identity matrix and you'll get the original matrix back.)  
-> ![it's an identity matrix](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/identity_matrix.PNG){.half}
+> ![it's an identity matrix](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/Identity_matrix.PNG){.half}
 
 ![one-hot encoding](https://raw.githubusercontent.com/shamicker/pytorch-challenge/master/images/one-hot_encoding.PNG){.smaller_half}
 
