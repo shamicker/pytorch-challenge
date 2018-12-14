@@ -729,8 +729,34 @@ PyTorch is also awesomely easy to convert to and from NumPy, using the `b = torc
 
 ## Convolutional Neural Networks
 Learn how to use convolutional neural networks to build state-of-the-art computer vision models.
-
 ETA 5 hours
+
+***
+There's lots of notes in my head about this. I'll be rummaging through them and will write them down later.
+
+For now:
+===
+
+#### Normalizing images
+(from video ["Batch Normalization ("batch norm") explained](https://www.youtube.com/watch?v=dXB-KQYkzNU) - by deeplizard)
+
+Regular techniques
+- normalize aka standardize
+- prep data for training
+- puts all data on the same scale (ie brightness, color, etc)
+
+Typical normalization process:
+- scale down from (ie) 10-1000 to 0-1
+
+Typical standardization process:
+- subtract the *mean* of the dataset from each point!
+  + and then dividing this difference by the *standard deviation* (std) of the dataset
+  + $z = \frac{x - m}{s}$ 
+- This forces the data to have a mean of 0 and a standard deviation of 1
+- often referred to as Normalization
+- Think of the normalized bell curve!
+
+
 
 ## Style Transfer
 Use a deep neural network to transfer the artistic style of one image onto another image.
